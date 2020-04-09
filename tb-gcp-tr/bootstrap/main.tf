@@ -1,11 +1,11 @@
 # Copyright 2019 The Tranquility Base Authors
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,8 +13,8 @@
 # limitations under the License.
 
 provider "google" {
-  region = var.region
-  zone   = var.region_zone
+  region  = var.region
+  zone    = var.region_zone
   version = "~> 2.5"
 }
 
@@ -53,6 +53,7 @@ resource "google_project_services" "bootstrap_project_apis" {
     "iam.googleapis.com",
     "iamcredentials.googleapis.com",
     "logging.googleapis.com",
+    "monitoring.googleapis.com",
     "oslogin.googleapis.com",
     "pubsub.googleapis.com",
     "serviceusage.googleapis.com",
@@ -131,7 +132,7 @@ resource "google_compute_instance" "bootstrap_terraform_server" {
     billing_account_id           = var.billing_account_id
     tb_discriminator             = var.tb_discriminator
     terraform_state_bucket_name  = google_storage_bucket.terraform-state-bucket-res.name
-    enable_itop = var.enable_itop
+    enable_itop                  = var.enable_itop
   })
 
   service_account {
@@ -145,4 +146,3 @@ resource "google_compute_instance" "bootstrap_terraform_server" {
 
   depends_on = [google_project_services.bootstrap_project_apis]
 }
-
